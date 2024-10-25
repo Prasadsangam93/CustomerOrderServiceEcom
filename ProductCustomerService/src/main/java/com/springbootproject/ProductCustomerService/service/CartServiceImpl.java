@@ -36,8 +36,21 @@ public class CartServiceImpl implements CartService {
         // Save the cart to the database
         return cartRepository.save(cart);
     }
-}
 
+    @Override
+    public String deleteCart(Long cartId) {
+
+        if (cartRepository.existsById(cartId)) {
+            cartRepository.deleteById(cartId);
+            return "Cart item successfully deleted with ID: " + cartId; // Return success message
+        } else {
+            return ("Cart item not found with id: " + cartId); // This will lead to a 500 error
+        }
+
+    }
+
+
+    }
 
 
 

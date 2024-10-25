@@ -10,4 +10,7 @@ public interface CartService {
     public Cart addCartItem(Long customerId, Long productId, Integer quantity);
 
 
+
+
+    public String deleteCart(Long cartId);
 }

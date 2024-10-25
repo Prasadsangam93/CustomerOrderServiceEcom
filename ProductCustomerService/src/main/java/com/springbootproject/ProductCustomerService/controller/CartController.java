@@ -61,6 +61,14 @@ public class CartController {
         Cart cart = cartService.addCartItem(customerId, productId, quantity);
         return ResponseEntity.ok(cart);
     }
+
+
+    @DeleteMapping("delete/{cartId}")
+    public ResponseEntity<String> deleteCart(@PathVariable Long cartId) {
+        // Call the service method to delete the cart item
+        String responseMessage = cartService.deleteCart(cartId);
+        return ResponseEntity.ok(responseMessage); // Return the response message
+    }
 }
 
 

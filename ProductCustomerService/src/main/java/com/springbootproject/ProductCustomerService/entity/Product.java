@@ -20,6 +20,9 @@ public class Product {
     private String productName;
     private Double price;
     private  Long quantity;
+
+    @Lob // Indicates this field will be treated as a large object
+    private byte[] image;
 //
 //    @OneToMany(cascade = CascadeType.ALL)
 //    @JoinColumn(name = "product_Id")

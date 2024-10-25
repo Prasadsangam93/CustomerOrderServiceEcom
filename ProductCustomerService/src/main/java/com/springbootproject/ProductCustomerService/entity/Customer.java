@@ -28,10 +28,10 @@ public class Customer {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_Id")
     private List<Address> addresses;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "customer_Id")
-    private List<Product> products;
+//
+//    @OneToMany(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "customer_Id")
+//    private List<Product> products;
 //
 //    @OneToMany(cascade = CascadeType.ALL)
 //    @JoinColumn(name = "customer_Id")
