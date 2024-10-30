@@ -1,6 +1,5 @@
 package com.springbootproject.ProductCustomerService.controller;
 import com.springbootproject.ProductCustomerService.entity.Cart;
-import com.springbootproject.ProductCustomerService.entity.Product;
 import com.springbootproject.ProductCustomerService.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -42,10 +41,6 @@ import org.springframework.web.bind.annotation.*;
 //
 //    // Optionally, add more endpoints like GET, DELETE, etc.
 
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/cart")

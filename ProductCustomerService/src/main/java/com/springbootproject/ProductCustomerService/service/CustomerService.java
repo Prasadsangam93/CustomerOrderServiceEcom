@@ -11,8 +11,10 @@ public interface CustomerService {
 
 
     public Customer updateCustomer(Long customerId, Customer customerDetails);
+
     public List<Customer> getAllCustomers();
+
     public Optional<Customer> getCustomerById(Long customerId);
 
-   public Optional<Customer> deleteCustomerById(Long customerId);
+    public Optional<Customer> deleteCustomerById(Long customerId);
 }
