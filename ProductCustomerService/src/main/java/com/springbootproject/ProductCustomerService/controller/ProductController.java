@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/api/products")
 public class ProductController {
 
+    
     @Autowired
     private ProductService productService;
 
