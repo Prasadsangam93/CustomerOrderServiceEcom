@@ -16,10 +16,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-
-import org.springframework.security.config.http.SessionCreationPolicy;
 
 @Configuration
 @EnableWebSecurity
@@ -29,9 +25,6 @@ public class SecurityConfiguration {
     @Autowired
     private MyUserDetailasService userDetailasService;
 
-//    @Autowired
-//    private JwtAuthenticationFilter jwtAuthenticationFilter;
-
     /**
      * Configures the HTTP security filter chain.
      */
@@ -39,12 +32,12 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain config(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity.csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(req -> req.requestMatchers("/api/customers/save","/api/customers/login").permitAll()
-                        //.requestMatchers("/admin/**").hasRole("ADMIN")
+                .authorizeHttpRequests(req -> req.requestMatchers("/api/customers/save","/api/customers/**").permitAll()
+
                         .anyRequest().authenticated())
-              //  .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+
                 .formLogin()
-                // Use the default Spring Security login page
+
                 .and()
                 .logout(logout -> logout.permitAll()) // Allow everyone to see the logout page
                 .build();

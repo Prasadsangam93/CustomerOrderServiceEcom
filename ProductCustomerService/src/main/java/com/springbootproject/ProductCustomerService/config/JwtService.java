@@ -31,7 +31,7 @@ public class JwtService {
      */
     public String genarateJwtToken(UserDetails userDetails) {
         Map<String, String> claims = new HashMap<>();
-        // claims.put("ISS","Satya");
+
         log.info("userDetails:::::::======={}", userDetails.toString());
         return Jwts.builder()
                 // .claims(claims)
