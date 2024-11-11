@@ -6,7 +6,7 @@ package com.springbootproject.ProductCustomerService.service;
 import com.springbootproject.ProductCustomerService.entity.Customer;
 import com.springbootproject.ProductCustomerService.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,10 +16,6 @@ import java.util.Optional;
 public  class CustomerServiceImpl implements CustomerService {
     @Autowired
     private CustomerRepository customerRepository;
-
-
-//    @Autowired
-//    private BCryptPasswordEncoder passwordEncoder;
 
 
     // Save a new customer

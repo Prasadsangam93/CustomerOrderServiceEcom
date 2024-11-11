@@ -175,14 +175,14 @@ public class SecurityConfiguration {
         return httpSecurity
                 // Disable CSRF for the endpoints that need to accept multipart requests (file uploads)
                 .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/api/products/save", "/api/customers/save","api/customers/**","api/cart/add","api/orders/save/{cartId}")
+                        .ignoringRequestMatchers("/api/products/**", "/api/customers/save","api/customers/**","api/cart/**","api/orders/save/{cartId}")
                 )
                 .authorizeHttpRequests(req -> req
                         // Allow these specific endpoints for unauthenticated access
                         .requestMatchers("/api/customers/save", "/api/customers/**").permitAll()
-                        .requestMatchers("/api/products/save","/api/products/**").permitAll()  // Public endpoint for file upload
+                        .requestMatchers("/api/products/**","/api/products/**").permitAll()  // Public endpoint for file upload
                         .requestMatchers("/api/payment/process","/api/process/**").permitAll()
-                        .requestMatchers("api/cart/add","/api/cart/**").permitAll()
+                        .requestMatchers("api/cart/**","/api/cart/**").permitAll()
                         .requestMatchers("api/orders/**","/api/orders/**").permitAll()
                         .anyRequest().authenticated()) // Other requests need authentication
                 .logout(logout -> logout.permitAll()) // Allow logout endpoint

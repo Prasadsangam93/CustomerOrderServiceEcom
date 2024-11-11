@@ -6,8 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
-
-
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -36,11 +34,15 @@ public class Cart {
             // Reference back to the Order
             @ManyToOne
             @JoinColumn(name = "order_id")
-            private Order order;
+
+
 
             // Calculate totalPrice based on quantity and price
             public void calculateTotalPrice() {
                 this.totalPrice = this.price * this.quantity;
+
+
+
             }
 
 }

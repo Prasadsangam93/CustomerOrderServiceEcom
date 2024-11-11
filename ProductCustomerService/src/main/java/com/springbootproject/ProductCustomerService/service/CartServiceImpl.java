@@ -2,8 +2,10 @@ package com.springbootproject.ProductCustomerService.service;
 
 import com.springbootproject.ProductCustomerService.entity.Cart;
 import com.springbootproject.ProductCustomerService.entity.Product;
+import com.springbootproject.ProductCustomerService.model.CartItem;
 import com.springbootproject.ProductCustomerService.repository.CartRepository;
 import com.springbootproject.ProductCustomerService.repository.ProductRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,8 +51,30 @@ public class CartServiceImpl implements CartService {
 
     }
 
+    @Override
+
+
+
+        @Transactional
+        public Cart updateCart(Long cartId, Integer additionalQuantity) {
+            // Find the cart by cartId
+            Cart cart = cartRepository.findById(cartId).orElseThrow(() -> new RuntimeException("Cart not found"));
+
+            // Increase the quantity
+            cart.setQuantity(cart.getQuantity() + additionalQuantity);
+
+            // Recalculate the total price
+            cart.calculateTotalPrice();
+
+            // Save the updated cart back to the repository
+            return cartRepository.save(cart);
+        }
 
     }
+
+
+
+
 
 
 

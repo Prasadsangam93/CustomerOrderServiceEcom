@@ -13,8 +13,8 @@ public class CartController {
     @Autowired
     private CartService cartService; // Assume this service handles the business logic
 
-    @PostMapping("/add")
-    public ResponseEntity<Cart> addCartItem(@RequestParam Long customerId,
+    @PostMapping("/save")
+    public ResponseEntity<Cart> addCart(@RequestParam Long customerId,
                                             @RequestParam Long productId,
                                             @RequestParam Integer quantity) {
         Cart cart = cartService.addCartItem(customerId, productId, quantity);
@@ -28,6 +28,16 @@ public class CartController {
         String responseMessage = cartService.deleteCart(cartId);
         return ResponseEntity.ok(responseMessage); // Return the response message
     }
+
+
+    @PutMapping("/{cartId}/increase")
+    public ResponseEntity<Cart> increaseCartQuantity(@PathVariable Long cartId, @RequestParam Integer quantity) {
+        Cart updatedCart = cartService.updateCart(cartId, quantity);
+        return ResponseEntity.ok(updatedCart);
+
+    }
+
+
 }
 
 
