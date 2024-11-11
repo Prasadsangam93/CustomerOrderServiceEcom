@@ -22,7 +22,7 @@ public class CartController {
     }
 
 
-    @DeleteMapping("delete/{cartId}")
+    @DeleteMapping("/delete/{cartId}")
     public ResponseEntity<String> deleteCart(@PathVariable Long cartId) {
         // Call the service method to delete the cart item
         String responseMessage = cartService.deleteCart(cartId);

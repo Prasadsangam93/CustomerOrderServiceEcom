@@ -32,8 +32,7 @@ public class Cart {
             private Product product;
 
             // Reference back to the Order
-            @ManyToOne
-            @JoinColumn(name = "order_id")
+
 
 
 

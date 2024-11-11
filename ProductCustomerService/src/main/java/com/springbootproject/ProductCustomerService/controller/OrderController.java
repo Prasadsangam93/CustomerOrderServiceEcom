@@ -15,7 +15,7 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @PostMapping("save/{cartId}")
+    @PostMapping("/save/{cartId}")
     public ResponseEntity<String> createOrder(@PathVariable Long cartId) {
         try {
             Order order = orderService.createOrder(cartId);
