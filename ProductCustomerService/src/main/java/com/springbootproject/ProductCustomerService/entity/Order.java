@@ -20,7 +20,7 @@ public class Order {
 
     private Long customerId; // The ID of the customer placing the order
     private Double totalPrice; // Total amount for the order
-    private String productName; // The name of the product being ordered
+
     private String orderStatus; // Status of the order (e.g., PENDING, COMPLETED, CANCELED)
 
     private LocalDateTime orderDate; // Date and time when the order was placed

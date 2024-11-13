@@ -10,7 +10,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Data
-public class UnAuthorizedExceptionCls  extends RuntimeException{
+public class UnAuthorizedExceptionCls extends RuntimeException {
 
     private String errorMessage;
 }

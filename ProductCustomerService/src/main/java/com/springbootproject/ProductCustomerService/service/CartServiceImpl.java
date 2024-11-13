@@ -1,81 +1,88 @@
 package com.springbootproject.ProductCustomerService.service;
 
 import com.springbootproject.ProductCustomerService.entity.Cart;
+import com.springbootproject.ProductCustomerService.entity.CartItem;
 import com.springbootproject.ProductCustomerService.entity.Product;
-import com.springbootproject.ProductCustomerService.model.CartItem;
-import com.springbootproject.ProductCustomerService.repository.CartRepository;
-import com.springbootproject.ProductCustomerService.repository.ProductRepository;
-import jakarta.transaction.Transactional;
+import com.springbootproject.ProductCustomerService.exception.ProductNotFoundException;
+import com.springbootproject.ProductCustomerService.exception.UserNotFoundExceptionCls;
+import com.springbootproject.ProductCustomerService.repository.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.springbootproject.ProductCustomerService.repository.CustomerRepository;
+
+import java.util.Optional;
 
 @Service
+@Slf4j
 public class CartServiceImpl implements CartService {
-
 
     @Autowired
     private CartRepository cartRepository;
 
     @Autowired
+    private CartItemRepository cartItemRepository;
+
+    @Autowired
+    private CustomerRepository customerRepository;
+
+    @Autowired
     private ProductRepository productRepository;
 
-
+    /* Adding product to the cart */
     @Override
-    public Cart addCartItem(Long customerId, Long productId, Integer quantity) {
+    public Cart addProductToUserCart(Long customerId, Long productId, Long quantity) throws ProductNotFoundException {
 
-        Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+        log.info("addProductToUserCart entered, userId is: {}", customerId);
 
-        // Create a new Cart instance
-        Cart cart = new Cart();
-        cart.setCustomerId(customerId);
-        cart.setProduct(product);
-        cart.setQuantity(quantity);
-        cart.setProductName(product.getProductName());
-        cart.setPrice(product.getPrice()); // Assuming Product has a getPrice() method
-        cart.calculateTotalPrice(); // Calculate total price
+        if (customerId == null) {
+            throw new UserNotFoundExceptionCls("User not found: " + customerId);
+        }
 
-        // Save the cart to the database
+        // Check if the user exists
+        customerRepository.findByCustomerId(customerId)
+                .orElseThrow(() -> new UserNotFoundExceptionCls("User not found with ID: " + customerId));
+
+        log.info("user id is: {}", customerId);
+
+        // Retrieve or create a Cart for the user
+        Cart cart = cartRepository.findByCustomerId(customerId).orElse(new Cart(customerId));
+        log.info("cart details: {}", cart);
+
+        // Retrieve the product from the database
+        Product product = productRepository.findByProductId(productId)
+                .orElseThrow(() -> new ProductNotFoundException("Product not found"));
+
+        // Check if the product is already in the cart
+        Optional<CartItem> existingItem = cart.getItems().stream()
+                .filter(item -> item.getProduct().getProductId().equals(productId))
+                .findFirst();
+
+        // If the product is already in the cart, update the quantity
+        if (existingItem.isPresent()) {
+            log.info("Product already in cart: {}", existingItem.isPresent());
+            CartItem cartItem = existingItem.get();
+            cartItem.setQuantity(cartItem.getQuantity() + quantity);
+        } else {
+            log.info("Adding new product to cart...");
+
+            // If the product is not in the cart, create a new CartItem
+            CartItem newItem = new CartItem();
+            newItem.setCart(cart);  // Associate CartItem with the Cart
+            newItem.setProduct(product);
+            newItem.setQuantity(quantity);
+            newItem.setProductName(product.getProductName());
+            newItem.setPrice((double) product.getPrice());
+            newItem.setCustomerId(customerId);
+
+            // Add the new CartItem to the Cart
+            cart.getItems().add(newItem);
+        }
+
+        // Update the total price of the cart
+        cart.updateTotalPrice();
+
+        // Save the Cart and its associated CartItems (due to cascade)
         return cartRepository.save(cart);
     }
-
-    @Override
-    public String deleteCart(Long cartId) {
-
-        if (cartRepository.existsById(cartId)) {
-            cartRepository.deleteById(cartId);
-            return "Cart item successfully deleted with ID: " + cartId; // Return success message
-        } else {
-            return ("Cart item not found with id: " + cartId); // This will lead to a 500 error
-        }
-
-    }
-
-    @Override
-
-
-
-        @Transactional
-        public Cart updateCart(Long cartId, Integer additionalQuantity) {
-            // Find the cart by cartId
-            Cart cart = cartRepository.findById(cartId).orElseThrow(() -> new RuntimeException("Cart not found"));
-
-            // Increase the quantity
-            cart.setQuantity(cart.getQuantity() + additionalQuantity);
-
-            // Recalculate the total price
-            cart.calculateTotalPrice();
-
-            // Save the updated cart back to the repository
-            return cartRepository.save(cart);
-        }
-
-    }
-
-
-
-
-
-
-
-
+}

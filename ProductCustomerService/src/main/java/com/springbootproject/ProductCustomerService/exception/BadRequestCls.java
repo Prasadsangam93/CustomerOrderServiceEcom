@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BadRequestCls extends  RuntimeException{
+public class BadRequestCls extends RuntimeException {
 
-    private  String errorMessage;
+    private String errorMessage;
 
 }

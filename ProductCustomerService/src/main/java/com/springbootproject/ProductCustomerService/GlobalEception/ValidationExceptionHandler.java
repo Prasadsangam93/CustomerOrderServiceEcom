@@ -2,6 +2,7 @@ package com.springbootproject.ProductCustomerService.GlobalEception;
 
 
 import com.springbootproject.ProductCustomerService.exception.BadRequestCls;
+import com.springbootproject.ProductCustomerService.exception.ProductNotFoundException;
 import com.springbootproject.ProductCustomerService.exception.UnAuthorizedExceptionCls;
 import com.springbootproject.ProductCustomerService.exception.UserNotFoundExceptionCls;
 import org.springframework.http.HttpStatus;
@@ -42,10 +43,14 @@ public class ValidationExceptionHandler {
     }
 
     @ExceptionHandler(BadRequestCls.class)
-    public ResponseEntity<String> handleBadRequestCls(BadRequestCls ex){
-        return new ResponseEntity<>(ex.getErrorMessage(),HttpStatus.BAD_REQUEST);
+    public ResponseEntity<String> handleBadRequestCls(BadRequestCls ex) {
+        return new ResponseEntity<>(ex.getErrorMessage(), HttpStatus.BAD_REQUEST);
 
+    }
 
+    @ExceptionHandler(ProductNotFoundException.class)
+    public ResponseEntity<String> handleProductNotFound(ProductNotFoundException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
 
     }
 }

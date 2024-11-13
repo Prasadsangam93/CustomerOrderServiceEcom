@@ -1,17 +1,10 @@
 package com.springbootproject.ProductCustomerService.service;
 
 import com.springbootproject.ProductCustomerService.entity.Cart;
+import com.springbootproject.ProductCustomerService.exception.ProductNotFoundException;
 
 public interface CartService {
 
 
-
-    public Cart addCartItem(Long customerId, Long productId, Integer quantity);
-
-
-
-
-    public String deleteCart(Long cartId);
-
-    Cart updateCart(Long cartId, Integer quantity);
+    public Cart addProductToUserCart(Long customerId, Long productId, Long quantity) throws ProductNotFoundException;
 }

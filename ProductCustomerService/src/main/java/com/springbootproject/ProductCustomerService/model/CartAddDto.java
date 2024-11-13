@@ -1,17 +1,17 @@
 package com.springbootproject.ProductCustomerService.model;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
+import lombok.ToString;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderDto {
+@ToString
+public class CartAddDto {
 
-    private Long customerId;
-    private List<Long> cartIds;
+    private Long  customerId;
+    private Long productId;
+    private Long quantity;
 }

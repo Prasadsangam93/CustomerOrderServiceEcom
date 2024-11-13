@@ -37,7 +37,7 @@ public class OrderServiceImpl implements OrderService {
         // Create a new Order object
         Order order = new Order(); // Create an instance of Order, not Cart
         order.setCustomerId(cart.getCustomerId());
-        order.setProductName(cart.getProductName());
+
         order.setTotalPrice(cart.getTotalPrice()); // Use totalPrice instead of totalPrice
         order.setOrderStatus("PENDING"); // Set the order status
         order.setOrderDate(LocalDateTime.now()); // Set the order date

@@ -7,10 +7,9 @@ import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor
-
 @ToString
 @Data
-public class UserNotFoundExceptionCls extends RuntimeException {
+public class ProductNotFoundException extends Exception {
 
     private String message;
 }
